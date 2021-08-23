@@ -4,9 +4,16 @@ import matter from 'gray-matter'
 import remark from 'remark'
 import html from 'remark-html'
 
+export interface IPostData {
+    id: string
+    date: string
+    title: string
+}
+export type PostsDataType = IPostData[]
+
 const postsDirectory = path.join(process.cwd(), 'posts')
 
-export function getPostDataWoHTML(id) {
+export function getPostDataWoHTML(id: string) {
     // Read markdown file as string
     const fullPath = path.join(postsDirectory, `${id}.md`)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -15,10 +22,10 @@ export function getPostDataWoHTML(id) {
     return matter(fileContents)
 }
 
-export async function getPostData(id) {
+export async function getPostData(id: string) {
     // async keyword was added to getPostData because we need to use await for remark.
     // That means we need to update getStaticProps in pages/posts/[id].js to use await when calling getPostData
-    const matterResult = getPostDataWoHTML(id)
+    const matterResult: matter.GrayMatterFile<string> = getPostDataWoHTML(id)
 
     // Use remark to convert markdown into HTML string
     const processedContent = await remark()
@@ -30,21 +37,23 @@ export async function getPostData(id) {
     return {
         id,
         contentHtml,
-        ...matterResult.data
+        title: matterResult.data.title,
+        date: matterResult.data.date,
     }
 }
 
 export function getSortedPostsData() {
     // Get file names under /posts
     const fileNames = fs.readdirSync(postsDirectory)
-    const allPostsData = fileNames.map(fileName => {
+    const allPostsData: PostsDataType = fileNames.map(fileName => {
         // Remove ".md" from file name to get id
         const id = fileName.replace(/\.md$/, '')
-        const matterResult = getPostDataWoHTML(id)
+        const matterResult: matter.GrayMatterFile<string> = getPostDataWoHTML(id)
 
         return {
             id,
-            ...matterResult.data
+            date: matterResult.data.date,
+            title: matterResult.data.title,
         }
     })
 

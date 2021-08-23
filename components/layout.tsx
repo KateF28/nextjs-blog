@@ -1,3 +1,4 @@
+import React from "react"
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from './layout.module.css'
@@ -7,7 +8,12 @@ import Link from 'next/link'
 const name = 'Kateryna Fedorova'
 export const siteTitle = 'Next.js Sample Website'
 
-export default function Layout({ children, home }) {
+interface ILayoutProps {
+    children: React.ReactNode
+    home?: boolean
+}
+
+export default function Layout({ children, home }: ILayoutProps) {
     return (
         <div className={styles.container}>
             <Head>

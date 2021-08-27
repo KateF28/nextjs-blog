@@ -1,12 +1,10 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '@components/layout'
+import Layout from '@components/layout'
+import Meta from '@components/meta'
 
 export default function FirstPost() {
     return (
         <Layout home={false}>
-            <Head>
-                <title>{siteTitle}</title>
-            </Head>
+            <Meta title="First Post" />
             <h1>First Post</h1>
         </Layout>
     )

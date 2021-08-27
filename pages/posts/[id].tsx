@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType, GetStaticPaths } from 'next'
-import Head from 'next/head'
 import Layout from '@components/layout'
+import Meta from '@components/meta'
 import Date from '@components/date'
 import { getAllPostIds, getPostData, IPostData } from '../../lib/posts'
 import utilStyles from '../../styles/utils.module.css'
@@ -32,9 +32,7 @@ export const getStaticProps = async ({params}: IPostPath) => {
 
 export default function Post({ postData }: InferGetStaticPropsType<typeof getStaticProps>) {
     return <Layout>
-        <Head>
-            <title>{postData.title}</title>
-        </Head>
+        <Meta title={postData.title} />
         <article>
             <h1 className={utilStyles.headingXl}>{postData.title}</h1>
             <div className={utilStyles.lightText}>

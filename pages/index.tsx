@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { GetStaticProps } from 'next'
-import Layout, { siteTitle } from '@components/layout'
+import Layout from '@components/layout'
+import Meta from '@components/meta'
 import Date from '@components/date'
 import { getSortedPostsData } from '../lib/posts'
 import utilStyles from '../styles/utils.module.css'
@@ -21,9 +22,7 @@ interface IHomePageProps {
 export default function Home({ allPostsData }: IHomePageProps) {
   return (
       <Layout home>
-        <Head>
-          <title>{siteTitle}</title>
-        </Head>
+          <Meta />
         <section className={utilStyles.headingMd}>
           <p>Hello, I'm Kate. I'm a front-end developer. You can contact me on <a href="https://www.linkedin.com/in/kateryna-fedorova-job-applicant-profile/" rel="noopener noreferrer" target="_blank">LinkedIn</a></p>
           <p>
